@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": false,
+		"noEmitOnError": true,
+		"removeComments": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "es5",
+		"outDir": "",
+		"forceConsistentCasingInFileNames": true
+	},
+	"files": [
+		"index.ts"
+	]
+}
