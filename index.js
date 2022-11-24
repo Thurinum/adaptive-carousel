@@ -231,14 +231,17 @@ function setSlide(set, oldIndex) {
 setup(
 	"#carousel",
 	[
-		new ItemSet("Dummy", [
-			"Owo",
-			"Uwo",
-			"owO",
-			"OwO",
-			"PwP",
-			"UwU"
-		], true, 0, "div")
+		new ItemSet(
+			"Dummy",
+			[
+				"Owo",
+				"Uwo",
+				"owO",
+				"OwO",
+				"PwP",
+				"UwU"
+			], false, 0, "div"
+		)
 	]
 )
 

@@ -1,0 +1,21 @@
+{
+	"name": "@thurinum/adaptive-carousel",
+	"version": "1.0.0",
+	"description": "A versatile, customizable, and library-agnostic carousel system.\n\nSupports multiple content types, such as images from local and remote URLs, PDFs in <embed> tags, or full webpages in <iframe> tags.\nSupports styling with a custom stylesheet.",
+	"main": "index.js",
+	"scripts": {
+		"start": "python -m http.server && start chrome http://localhost:8000"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Thurinum/adaptive-carousel.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/Thurinum/adaptive-carousel/issues"
+	},
+	"homepage": "https://github.com/Thurinum/adaptive-carousel#readme",
+	"dependencies": {}
+}
