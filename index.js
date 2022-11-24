@@ -112,7 +112,7 @@ function setContent(setName) { // Same parameters as above
 		if (set.isPath)
 			content += `<${set.container} class="slide slide${i}" src="${set.items[i]}"></${set.container}>`;
 		else
-			content += set.items[i];
+			content += `<${set.container} class="slide slide${i}">${set.items[i]}</${set.container}>`;
 	}
 
 	settings.slideshow.innerHTML = content;

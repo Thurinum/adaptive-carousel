@@ -175,3 +175,7 @@
 	position: absolute;
 	transition: transform 1s cubic-bezier(.68, -0.55, .27, 1.55), opacity 1s cubic-bezier(.68, -0.55, .27, 1.55);
 }
+
+div.slide {
+	padding: 70px;
+}
