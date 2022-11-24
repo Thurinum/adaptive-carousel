@@ -1,11 +1,11 @@
 {
 	"compilerOptions": {
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"noEmitOnError": true,
 		"removeComments": true,
 		"sourceMap": true,
 		"strict": true,
-		"target": "es5",
+		"target": "es6",
 		"outDir": "",
 		"forceConsistentCasingInFileNames": true
 	},
