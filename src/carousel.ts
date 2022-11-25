@@ -3,6 +3,8 @@
 // Customizable popup window/carousel system           //
 /////////////////////////////////////////////////////////
 
+import "carousel.css";
+
 export interface CarouselParams {
 	selector: string
 	itemSets: CarouselItemSet[]
