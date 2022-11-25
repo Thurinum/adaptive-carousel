@@ -63,7 +63,7 @@ class Carousel {
                 this.isFullscreen = true;
             }
         });
-        (_b = document.querySelector(".slideshow_close")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", this.hide);
+        (_b = document.querySelector(".slideshow_close")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => this.hide());
         if (set.items.length > 0) {
             this.currentIndex = set.startIndex;
             this.setItem(set.items.length - 1);
@@ -152,6 +152,10 @@ class Carousel {
         }, 500);
     }
     hide() {
+        if (!this.currentItemSet) {
+            throw new Error("No current item set!");
+            return;
+        }
         let target = this.carousel;
         target.style.transform = "translate(-50%, -50%) scale(0.9)";
         target.style.opacity = "0";
@@ -193,13 +197,31 @@ const carousel = new Carousel({
             items: [
                 new CarouselItem({
                     name: 'image1',
-                    src: 'https://i.imgur.com/1ZQ3Z1K.png',
+                    src: 'https://picsum.photos/id/1/1000',
                     isPath: true,
                     tagName: 'img'
                 }),
                 new CarouselItem({
                     name: 'image2',
-                    src: 'https://i.imgur.com/1ZQ3Z1K.png',
+                    src: 'https://picsum.photos/id/2/1000',
+                    isPath: true,
+                    tagName: 'img'
+                }),
+                new CarouselItem({
+                    name: 'image3',
+                    src: 'https://picsum.photos/id/3/1000',
+                    isPath: true,
+                    tagName: 'img'
+                }),
+                new CarouselItem({
+                    name: 'image4',
+                    src: 'https://picsum.photos/id/4/1000',
+                    isPath: true,
+                    tagName: 'img'
+                }),
+                new CarouselItem({
+                    name: 'image5',
+                    src: 'https://picsum.photos/id/5/1000',
                     isPath: true,
                     tagName: 'img'
                 }),

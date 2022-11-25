@@ -104,7 +104,7 @@ class Carousel {
 			}
 		});
 
-		document.querySelector(".slideshow_close")?.addEventListener("click", this.hide);
+		document.querySelector(".slideshow_close")?.addEventListener("click", () => this.hide());
 
 		// default to first item if there is one
 		if (set.items.length > 0) {
@@ -231,6 +231,11 @@ class Carousel {
 	}
 
 	hide(): void {
+		if (!this.currentItemSet) {
+			throw new Error("No current item set!");
+			return;
+		}
+
 		let target = this.carousel;
 		target.style.transform = "translate(-50%, -50%) scale(0.9)";
 		target.style.opacity = "0";
@@ -301,13 +306,31 @@ const carousel = new Carousel({
 			items: [
 				new CarouselItem({
 					name: 'image1',
-					src: 'https://i.imgur.com/1ZQ3Z1K.png',
+					src: 'https://picsum.photos/id/1/1000',
 					isPath: true,
 					tagName: 'img'
 				}),
 				new CarouselItem({
 					name: 'image2',
-					src: 'https://i.imgur.com/1ZQ3Z1K.png',
+					src: 'https://picsum.photos/id/2/1000',
+					isPath: true,
+					tagName: 'img'
+				}),
+				new CarouselItem({
+					name: 'image3',
+					src: 'https://picsum.photos/id/3/1000',
+					isPath: true,
+					tagName: 'img'
+				}),
+				new CarouselItem({
+					name: 'image4',
+					src: 'https://picsum.photos/id/4/1000',
+					isPath: true,
+					tagName: 'img'
+				}),
+				new CarouselItem({
+					name: 'image5',
+					src: 'https://picsum.photos/id/5/1000',
 					isPath: true,
 					tagName: 'img'
 				}),

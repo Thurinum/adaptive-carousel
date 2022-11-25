@@ -1,7 +1,7 @@
 :root {
-	--background-primary: #CCC;
-	--highlight-primary: #EEE;
-	--font-secondary: sans-serif;
+	--background-primary: rgb(250, 247, 247);
+	--highlight-primary: #00aeff;
+	--font-secondary: white
 }
 
 .slideshow {
