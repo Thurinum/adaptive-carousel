@@ -323,3 +323,5 @@ class CarouselStyle {
 		this.easing = params.easing ?? "cubic-bezier(0.61,-0.07, 0.31, 1.06)";
 	}
 }
+
+module.exports = Carousel;
