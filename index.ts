@@ -185,11 +185,11 @@ class Carousel {
 		this.isSwitching = true;
 
 		let oldIndex = this.currentIndex;
-		this.currentIndex--;
+		this.currentIndex++;
 
-		// reset to opposite end if at the start
-		if (this.currentIndex < 0)
-			this.currentIndex = this.currentItemSet.items.length - 1;
+		// reset to opposite end if at the end
+		if (this.currentIndex >= this.currentItemSet.items.length)
+			this.currentIndex = 0;
 
 		this.setItem(oldIndex);
 	}
@@ -207,11 +207,11 @@ class Carousel {
 		this.isSwitching = true;
 
 		let oldIndex = this.currentIndex;
-		this.currentIndex++;
+		this.currentIndex--;
 
-		// reset to opposite end if at the end
-		if (this.currentIndex >= this.currentItemSet.items.length)
-			this.currentIndex = 0;
+		// reset to opposite end if at the start
+		if (this.currentIndex < 0)
+			this.currentIndex = this.currentItemSet.items.length - 1;
 
 		this.setItem(oldIndex);
 	}

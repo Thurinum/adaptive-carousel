@@ -120,9 +120,9 @@ class Carousel {
             return;
         this.isSwitching = true;
         let oldIndex = this.currentIndex;
-        this.currentIndex--;
-        if (this.currentIndex < 0)
-            this.currentIndex = this.currentItemSet.items.length - 1;
+        this.currentIndex++;
+        if (this.currentIndex >= this.currentItemSet.items.length)
+            this.currentIndex = 0;
         this.setItem(oldIndex);
     }
     toPreviousItem() {
@@ -134,9 +134,9 @@ class Carousel {
             return;
         this.isSwitching = true;
         let oldIndex = this.currentIndex;
-        this.currentIndex++;
-        if (this.currentIndex >= this.currentItemSet.items.length)
-            this.currentIndex = 0;
+        this.currentIndex--;
+        if (this.currentIndex < 0)
+            this.currentIndex = this.currentItemSet.items.length - 1;
         this.setItem(oldIndex);
     }
     show() {
