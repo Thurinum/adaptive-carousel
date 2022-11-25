@@ -6,10 +6,9 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "ES2022",
-		"outDir": "example",
+		"outDir": "./lib",
 		"forceConsistentCasingInFileNames": true
 	},
-	"files": [
-		"carousel.ts"
-	]
+	"include": ["src"],
+	"exclude": ["node_modules"]
 }

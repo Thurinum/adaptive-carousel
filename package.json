@@ -2,29 +2,25 @@
 	"name": "maxime-pelletier",
 	"version": "1.1.3",
 	"description": "A versatile, customizable, and library-agnostic carousel system.\n\nSupports multiple content types, such as images from local and remote URLs, PDFs in <embed> tags, or full webpages in <iframe> tags.\nSupports styling with a custom stylesheet.",
-	"main": "carousel.ts",
-	"files": [
-		"carousel.ts",
-		"carousel.css"
-	],
+	"main": "lib/carousel.js",
+	"files": ["lib/**/*"],
 	"scripts": {
-		"start": "tsc --build && python -m http.server --directory ./example/ && start chrome http://localhost:8000"
+		"start": "tsc --build && python -m http.server --directory ./example/ && start chrome http://localhost:8000",
+		"build": "tsc"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/Thurinum/adaptive-carousel.git"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Thurinum",
 	"license": "GPL-3.0-or-later",
 	"bugs": {
 		"url": "https://github.com/Thurinum/adaptive-carousel/issues"
 	},
 	"homepage": "https://github.com/Thurinum/adaptive-carousel#readme",
-	"dependencies": {
-		"typescript": "^4.9.3"
-	},
 	"devDependencies": {
+		"typescript": "^4.9.3",
 		"@types/node": "^18.11.9"
 	}
 }
