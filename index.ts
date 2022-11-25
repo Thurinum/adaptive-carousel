@@ -345,7 +345,7 @@ const carousel = new Carousel({
 				}),
 				new CarouselItem({
 					name: 'image2',
-					src: 'https://picsum.photos/id/2/1000',
+					src: 'https://info.cegepmontpetit.ca/assets/photos/mp.png',
 					isPath: true,
 					tagName: 'img'
 				}),
