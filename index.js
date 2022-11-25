@@ -4,6 +4,7 @@ class Carousel {
         this.isFullscreen = false;
         this.isSwitching = false;
         this.currentIndex = -1;
+        this.easing = params.easing;
         this.itemSets = params.itemSets;
         const element = document.querySelector(params.selector);
         if (!element)
@@ -85,7 +86,7 @@ class Carousel {
         else
             newSlide.style.transform = "translate(-100%)";
         newSlide.style.display = "block";
-        newSlide.style.transition = `transform 1s cubic-bezier(.68,-0.55,.27,1.55), opacity 1s cubic-bezier(.68,-0.55,.27,1.55)`;
+        newSlide.style.transition = `transform 1s ${this.easing}, opacity 1s ${this.easing}`;
         setTimeout(function () {
             newSlide.style.transform = "translate(0)";
             newSlide.style.opacity = '1';
@@ -184,6 +185,7 @@ class CarouselItem {
 }
 const carousel = new Carousel({
     selector: '#carousel',
+    easing: "cubic-bezier(0.61,-0.07, 0.31, 1.06)",
     itemSets: [
         new CarouselItemSet({
             name: 'carousel1',

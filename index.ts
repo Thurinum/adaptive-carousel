@@ -5,11 +5,13 @@
 
 // A set of items in the carousel
 interface CarouselParams {
-	selector: string
+	selector: string,
+	easing: string,
 	itemSets: CarouselItemSet[]
 }
 class Carousel {
 	carousel: HTMLElement
+	easing: string
 	itemSets: CarouselItemSet[]
 
 	private titleTimeout?: any
@@ -19,7 +21,8 @@ class Carousel {
 	private currentItemSet?: CarouselItemSet
 
 	constructor(params: CarouselParams) {
-		this.itemSets = params.itemSets
+		this.easing = params.easing;
+		this.itemSets = params.itemSets;
 
 		// get the carousel element
 		const element = document.querySelector(params.selector);
@@ -134,7 +137,7 @@ class Carousel {
 			newSlide.style.transform = "translate(-100%)";
 
 		newSlide.style.display = "block";
-		newSlide.style.transition = `transform 1s cubic-bezier(.68,-0.55,.27,1.55), opacity 1s cubic-bezier(.68,-0.55,.27,1.55)`;
+		newSlide.style.transition = `transform 1s ${this.easing}, opacity 1s ${this.easing}`;
 
 		// Give time to the transition to update
 		setTimeout(function () {
@@ -290,6 +293,7 @@ class CarouselItem {
 // instantiate the carousel (TEST)
 const carousel = new Carousel({
 	selector: '#carousel',
+	easing: "cubic-bezier(0.61,-0.07, 0.31, 1.06)",
 	itemSets: [
 		new CarouselItemSet({
 			name: 'carousel1',
