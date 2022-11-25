@@ -6,7 +6,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "ES2022",
-		"outDir": "",
+		"outDir": "example",
 		"forceConsistentCasingInFileNames": true
 	},
 	"files": [

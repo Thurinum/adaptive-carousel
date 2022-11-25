@@ -20,7 +20,7 @@ class Carousel {
             const trigger = document.querySelector(itemSet.triggerSelector);
             if (!trigger)
                 throw new Error(`Carousel trigger ${itemSet.triggerSelector} not found!`);
-            trigger.addEventListener("click", this.show);
+            trigger.addEventListener("click", () => this.show());
         }
     }
     setItemSet(itemSetName) {
@@ -222,6 +222,7 @@ const carousel = new Carousel({
     itemSets: [
         new CarouselItemSet({
             name: 'carousel1',
+            triggerSelector: 'button',
             style: new CarouselStyle({
                 highlight: "lightblue",
                 foreground: "#eee",
@@ -264,5 +265,4 @@ const carousel = new Carousel({
     ]
 });
 carousel.setItemSet('carousel1');
-carousel.show();
 //# sourceMappingURL=index.js.map
