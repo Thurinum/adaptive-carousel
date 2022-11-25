@@ -1,5 +1,5 @@
-"use strict";
-class Carousel {
+require.context("../src", true, /\.css$/);
+export class Carousel {
     carousel;
     itemSets;
     titleTimeout;
@@ -175,7 +175,7 @@ class Carousel {
         return itemSet;
     }
 }
-class CarouselItemSet {
+export class CarouselItemSet {
     name;
     items;
     style;
@@ -193,7 +193,7 @@ class CarouselItemSet {
         this.startIndex = params.startIndex;
     }
 }
-class CarouselItem {
+export class CarouselItem {
     name;
     src;
     isPath;
@@ -205,7 +205,7 @@ class CarouselItem {
         this.isPath = params.isPath;
     }
 }
-class CarouselStyle {
+export class CarouselStyle {
     highlight;
     foreground;
     background;

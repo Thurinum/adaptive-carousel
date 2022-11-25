@@ -4,11 +4,17 @@
 		"noEmitOnError": true,
 		"removeComments": true,
 		"sourceMap": true,
+		"declaration": true,
 		"strict": true,
 		"target": "ES2022",
-		"outDir": "./lib",
-		"forceConsistentCasingInFileNames": true
+		"outDir": "build",
+		"forceConsistentCasingInFileNames": true,
+		"types": [
+			"node",
+			"webpack-env"
+		]
 	},
 	"include": ["src"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules"],
+	"compileOnSave": true
 }
