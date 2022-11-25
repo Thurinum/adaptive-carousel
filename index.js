@@ -1,16 +1,17 @@
 "use strict";
 class Carousel {
     constructor(params) {
+        var _a;
         this.isFullscreen = false;
         this.isSwitching = false;
         this.currentIndex = -1;
-        this.easing = params.easing;
+        this.easing = (_a = params.easing) !== null && _a !== void 0 ? _a : "cubic-bezier(0.61,-0.07, 0.31, 1.06)";
         this.itemSets = params.itemSets;
         const element = document.querySelector(params.selector);
         if (!element)
             throw new Error(`Carousel element ${params.selector} not found!`);
         this.carousel = element;
-        this.carousel.classList.add("slideshow");
+        this.carousel.classList.add("carousel");
         for (const itemSet of this.itemSets) {
             if (!itemSet.triggerSelector)
                 continue;
@@ -26,30 +27,30 @@ class Carousel {
         this.carousel.innerHTML = "";
         this.currentItemSet = set;
         let content = `
-			<span class="slideshow_close">X</span>
-			<span class="slideshow_title">Document viewer</span>
-			<span class="slideshow_resize" title="Toggle fullscreen">&#8690;</span>
-			<span class="slideshow_progress"></span>`;
+			<span class="carousel-close">X</span>
+			<span class="carousel-title">Document viewer</span>
+			<span class="carousel-resize" title="Toggle fullscreen">&#8690;</span>
+			<span class="carousel-page"></span>`;
         if (set.items.length > 1)
             content += `
-				<span class="slideshow_arrow slideshow_arrow_left">&lt;</span>
-				<span class="slideshow_arrow slideshow_arrow_right">&gt;</span>`;
+				<span class="carousel-arrow carousel-arrow-left">&lt;</span>
+				<span class="carousel-arrow carousel-arrow-right">&gt;</span>`;
         for (let i = 0; i < set.items.length; i++) {
             const item = set.items[i];
             content += item.isPath
-                ? `<${item.tagName} class="slide slide${i}" src="${item.src}"></${item.tagName}>`
-                : `<${item.tagName} class="slide slide${i}">${item.src}</${item.tagName}>`;
+                ? `<${item.tagName} class="carousel-item carousel-item${i}" src="${item.src}"></${item.tagName}>`
+                : `<${item.tagName} class="carousel-item carousel-item${i}">${item.src}</${item.tagName}>`;
         }
         this.carousel.innerHTML = content;
         if (set.items.length <= 1)
             return;
-        const leftArrow = this.carousel.querySelector(".slideshow_arrow_left");
-        const rightArrow = this.carousel.querySelector(".slideshow_arrow_right");
+        const leftArrow = this.carousel.querySelector(".carousel-arrow-left");
+        const rightArrow = this.carousel.querySelector(".carousel-arrow-right");
         leftArrow.addEventListener("click", () => this.toPreviousItem());
         rightArrow.addEventListener("click", () => this.toNextItem());
         leftArrow.style.transform = "translate(0, -50%) scale(1)";
         rightArrow.style.transform = "translate(0, -50%) scale(1)";
-        (_a = document.querySelector(".slideshow_resize")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+        (_a = document.querySelector(".carousel-resize")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
             if (this.isFullscreen) {
                 this.carousel.style.width = "85vw";
                 this.carousel.style.height = "80vh";
@@ -63,21 +64,24 @@ class Carousel {
                 this.isFullscreen = true;
             }
         });
-        (_b = document.querySelector(".slideshow_close")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => this.hide());
+        (_b = document.querySelector(".carousel-close")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => this.hide());
         if (set.items.length > 0) {
             this.currentIndex = set.startIndex;
             this.setItem(set.items.length - 1);
         }
+        this.carousel.style.setProperty("--highlight", set.style.highlight);
+        this.carousel.style.setProperty("--foreground", set.style.foreground);
+        this.carousel.style.setProperty("--background", set.style.background);
     }
     setItem(oldIndex) {
         if (!this.currentItemSet) {
             throw new Error("No current item set!");
             return;
         }
-        let currentSlide = document.querySelector(`.slide${oldIndex}`);
-        let newSlide = document.querySelector(`.slide${this.currentIndex}`);
-        let title = document.querySelector(".slideshow_title");
-        let progress = document.querySelector(".slideshow_progress");
+        let currentSlide = document.querySelector(`.carousel-item${oldIndex}`);
+        let newSlide = document.querySelector(`.carousel-item${this.currentIndex}`);
+        let title = document.querySelector(".carousel-title");
+        let progress = document.querySelector(".carousel-page");
         clearTimeout(this.titleTimeout);
         newSlide.style.transition = "none";
         newSlide.style.opacity = '0';
@@ -172,9 +176,15 @@ class Carousel {
 }
 class CarouselItemSet {
     constructor(params) {
+        var _a;
         this.startIndex = 0;
         this.name = params.name;
         this.items = params.items;
+        this.style = (_a = params.style) !== null && _a !== void 0 ? _a : new CarouselStyle({
+            highlight: "#ff0000",
+            background: "#000000",
+            foreground: "#ffffff"
+        });
         this.triggerSelector = params.triggerSelector;
         this.startIndex = params.startIndex;
     }
@@ -187,12 +197,23 @@ class CarouselItem {
         this.isPath = params.isPath;
     }
 }
+class CarouselStyle {
+    constructor(params) {
+        this.highlight = params.highlight;
+        this.foreground = params.foreground;
+        this.background = params.background;
+    }
+}
 const carousel = new Carousel({
     selector: '#carousel',
-    easing: "cubic-bezier(0.61,-0.07, 0.31, 1.06)",
     itemSets: [
         new CarouselItemSet({
             name: 'carousel1',
+            style: new CarouselStyle({
+                highlight: "lightblue",
+                foreground: "#eee",
+                background: "#222"
+            }),
             startIndex: 0,
             items: [
                 new CarouselItem({

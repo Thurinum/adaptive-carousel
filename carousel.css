@@ -1,10 +1,4 @@
-:root {
-	--background-primary: rgb(250, 247, 247);
-	--highlight-primary: #00aeff;
-	--font-secondary: white
-}
-
-.slideshow {
+.carousel {
 	width: 85vw;
 	height: 80vh;
 
@@ -13,8 +7,7 @@
 	top: 50%;
 	transform: translate(-50%, -50%) scale(0.9);
 
-	/* background-image: url("../resources/graphics/Logo_Throbber_Opaque.gif"); */
-	background-color: var(--background-primary);
+	background: var(--background);
 	background-repeat: no-repeat;
 	background-position: center center;
 	box-shadow: 0 0 3px 4px #00000021;
@@ -24,11 +17,12 @@
 	opacity: 0;
 	display: none;
 	transform: translate(-50%, -50%) scale(0.9);
-	transition: transform 0.5s ease-out, opacity 0.5s ease-out,
+	transition:
+		transform 0.5s ease-out, opacity 0.5s ease-out,
 		width 0.3s ease-out, height 0.3s ease-out;
 }
 
-.slideshow_arrow {
+.carousel-arrow {
 	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%) scale(0);
@@ -43,49 +37,49 @@
 
 	width: 5%;
 	height: 30%;
-	color: var(--highlight-primary);
-	background-color: #11111112;
-	text-shadow: var(--highlight-primary) 0 0 3px;
+	color: var(--highlight);
+	background-color: var(--background);
+	text-shadow: var(--highlight) 0 0 3px;
 
 	transition: background 0.1s ease-out, color 0.1s linear, text-shadow 0.1s ease-out, transform 0.5s ease-out, box-shadow 0.1s ease-out, margin 0.1s ease-out;
 }
 
-.slideshow_arrow:hover {
-	background-color: #000000DD;
-	color: var(--font-secondary);
-	text-shadow: var(--font-secondary) 0 0 10px;
+.carousel-arrow:hover {
+	background-color: var(--background);
+	color: var(--foreground);
+	text-shadow: var(--foreground) 0 0 10px;
 }
 
-.slideshow_arrow_left {
+.carousel-arrow-left {
 	border-top-right-radius: 7px;
 	border-bottom-right-radius: 7px;
 }
 
-.slideshow_arrow_left:hover {
-	box-shadow: 4px 0 4px 0px #BFBFBF;
+.carousel-arrow-left:hover {
+	box-shadow: 4px 0 4px 0px var(--foreground);
 }
 
-.slideshow_arrow_left:active {
+.carousel-arrow-left:active {
 	margin-left: 4px;
 	box-shadow: none;
 }
 
-.slideshow_arrow_right {
+.carousel-arrow-right {
 	border-top-left-radius: 7px;
 	border-bottom-left-radius: 7px;
 	right: 0;
 }
 
-.slideshow_arrow_right:hover {
-	box-shadow: -4px 0 4px 0px #BFBFBF;
+.carousel-arrow-right:hover {
+	box-shadow: -4px 0 4px 0px var(--foreground);
 }
 
-.slideshow_arrow_right:active {
+.carousel-arrow-right:active {
 	margin-right: 4px;
 	box-shadow: none;
 }
 
-.slideshow_title {
+.carousel-title {
 	width: fit-content;
 	height: 34px;
 
@@ -93,8 +87,9 @@
 	left: 47px;
 	top: -47px;
 
-	color: var(--highlight-primary);
+	color: var(--highlight);
 	background-color: #000000CC;
+	backdrop-filter: blur(25px);
 	padding: 13px 1% 0 1%;
 
 	z-index: 3;
@@ -103,7 +98,7 @@
 	transition: top 0.5s ease-out;
 }
 
-.slideshow_close {
+.carousel-close {
 	width: 47px;
 	height: 47px;
 
@@ -111,8 +106,9 @@
 	left: 0;
 	top: 0;
 	user-select: none;
-	background-color: var(--highlight-primary);
-	text-shadow: var(--highlight-primary) 0 0 3px;
+	background-color: var(--highlight);
+	text-shadow: var(--highlight) 0 0 3px;
+	border-bottom-right-radius: 5px;
 
 	display: grid;
 	align-items: center;
@@ -123,39 +119,39 @@
 	z-index: 1;
 }
 
-.slideshow_close:hover {
-	background-color: #F7C100EE;
-	text-shadow: var(--font-secondary) 0 0 10px;
+.carousel-close:hover {
+	background-color: var(--foreground);
+	text-shadow: var(--foreground) 0 0 10px;
 	font-size: 1.5em;
 }
 
-.slideshow_close:active {
+.carousel-close:active {
 	font-size: 0.9em;
-	background-color: #F7C100DD;
+	background-color: var(--highlight);
 }
 
-.slideshow_resize {
+.carousel-resize {
 	position: absolute;
 	right: 0;
 	bottom: 0;
 
-	background-color: var(--highlight-primary);
+	background-color: var(--highlight);
 
 	cursor: pointer;
 	user-select: none;
 	z-index: 2;
 }
 
-.slideshow_progress {
+.carousel-page {
 	width: fit-content;
 	width: -moz-fit-content;
 
 	position: absolute;
-	bottom: 1%;
+	bottom: 3%;
 	left: 46%;
 	transform: translate(50%, 0);
 
-	color: var(--highlight-primary);
+	color: var(--highlight);
 	background-color: #000000cc;
 	border: solid 1.5px black;
 	border-radius: 3px;
@@ -166,16 +162,20 @@
 	z-index: 3;
 }
 
-.slide {
+.carousel-item {
 	width: 100%;
 	height: 100%;
-	border: 0;
 	display: none;
-	/* slideshow.js */
 	position: absolute;
 	transition: transform 1s cubic-bezier(.68, -0.55, .27, 1.55), opacity 1s cubic-bezier(.68, -0.55, .27, 1.55);
+
+	border: 0;
 }
 
-div.slide {
+div.carousel-item {
 	padding: 70px;
+}
+
+img.carousel-item {
+	object-fit: cover;
 }

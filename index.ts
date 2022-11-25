@@ -5,13 +5,13 @@
 
 // A set of items in the carousel
 interface CarouselParams {
-	selector: string,
-	easing: string,
+	selector: string
+	easing?: string
 	itemSets: CarouselItemSet[]
 }
 class Carousel {
 	carousel: HTMLElement
-	easing: string
+	easing: string;
 	itemSets: CarouselItemSet[]
 
 	private titleTimeout?: any
@@ -21,7 +21,7 @@ class Carousel {
 	private currentItemSet?: CarouselItemSet
 
 	constructor(params: CarouselParams) {
-		this.easing = params.easing;
+		this.easing = params.easing ?? "cubic-bezier(0.61,-0.07, 0.31, 1.06)";
 		this.itemSets = params.itemSets;
 
 		// get the carousel element
@@ -31,7 +31,7 @@ class Carousel {
 			throw new Error(`Carousel element ${params.selector} not found!`);
 
 		this.carousel = element as HTMLElement;
-		this.carousel.classList.add("slideshow");
+		this.carousel.classList.add("carousel");
 
 		// setup set triggers
 		for (const itemSet of this.itemSets) {
@@ -56,24 +56,24 @@ class Carousel {
 
 		// add base controls
 		let content = `
-			<span class="slideshow_close">X</span>
-			<span class="slideshow_title">Document viewer</span>
-			<span class="slideshow_resize" title="Toggle fullscreen">&#8690;</span>
-			<span class="slideshow_progress"></span>`;
+			<span class="carousel-close">X</span>
+			<span class="carousel-title">Document viewer</span>
+			<span class="carousel-resize" title="Toggle fullscreen">&#8690;</span>
+			<span class="carousel-page"></span>`;
 
 		// show switching arrows when displaying multiple items
 		if (set.items.length > 1)
 			content += `
-				<span class="slideshow_arrow slideshow_arrow_left">&lt;</span>
-				<span class="slideshow_arrow slideshow_arrow_right">&gt;</span>`;
+				<span class="carousel-arrow carousel-arrow-left">&lt;</span>
+				<span class="carousel-arrow carousel-arrow-right">&gt;</span>`;
 
 		// add every item
 		for (let i = 0; i < set.items.length; i++) {
 			const item = set.items[i];
 
 			content += item.isPath
-				? `<${item.tagName} class="slide slide${i}" src="${item.src}"></${item.tagName}>`
-				: `<${item.tagName} class="slide slide${i}">${item.src}</${item.tagName}>`;
+				? `<${item.tagName} class="carousel-item carousel-item${i}" src="${item.src}"></${item.tagName}>`
+				: `<${item.tagName} class="carousel-item carousel-item${i}">${item.src}</${item.tagName}>`;
 		}
 
 		this.carousel.innerHTML = content;
@@ -82,15 +82,15 @@ class Carousel {
 		if (set.items.length <= 1)
 			return;
 
-		const leftArrow = this.carousel.querySelector(".slideshow_arrow_left") as HTMLElement;
-		const rightArrow = this.carousel.querySelector(".slideshow_arrow_right") as HTMLElement;
+		const leftArrow = this.carousel.querySelector(".carousel-arrow-left") as HTMLElement;
+		const rightArrow = this.carousel.querySelector(".carousel-arrow-right") as HTMLElement;
 
 		leftArrow.addEventListener("click", () => this.toPreviousItem());
 		rightArrow.addEventListener("click", () => this.toNextItem());
 		leftArrow.style.transform = "translate(0, -50%) scale(1)";
 		rightArrow.style.transform = "translate(0, -50%) scale(1)";
 
-		document.querySelector(".slideshow_resize")?.addEventListener("click", (e) => {
+		document.querySelector(".carousel-resize")?.addEventListener("click", (e) => {
 			if (this.isFullscreen) {
 				this.carousel.style.width = "85vw";
 				this.carousel.style.height = "80vh";
@@ -104,13 +104,18 @@ class Carousel {
 			}
 		});
 
-		document.querySelector(".slideshow_close")?.addEventListener("click", () => this.hide());
+		document.querySelector(".carousel-close")?.addEventListener("click", () => this.hide());
 
 		// default to first item if there is one
 		if (set.items.length > 0) {
 			this.currentIndex = set.startIndex!;
 			this.setItem(set.items.length - 1);
 		}
+
+		// set theme
+		this.carousel.style.setProperty("--highlight", set.style.highlight);
+		this.carousel.style.setProperty("--foreground", set.style.foreground);
+		this.carousel.style.setProperty("--background", set.style.background);
 	}
 
 	setItem(oldIndex: number): void {
@@ -119,10 +124,10 @@ class Carousel {
 			return;
 		}
 
-		let currentSlide = document.querySelector(`.slide${oldIndex}`) as HTMLElement;
-		let newSlide = document.querySelector(`.slide${this.currentIndex}`) as HTMLElement;
-		let title = document.querySelector(".slideshow_title") as HTMLElement;
-		let progress = document.querySelector(".slideshow_progress") as HTMLElement;
+		let currentSlide = document.querySelector(`.carousel-item${oldIndex}`) as HTMLElement;
+		let newSlide = document.querySelector(`.carousel-item${this.currentIndex}`) as HTMLElement;
+		let title = document.querySelector(".carousel-title") as HTMLElement;
+		let progress = document.querySelector(".carousel-page") as HTMLElement;
 
 		// Clear old animation timer
 		clearTimeout(this.titleTimeout);
@@ -151,7 +156,7 @@ class Carousel {
 		else
 			currentSlide.style.transform = "translate(-100%)";
 
-		// Update slideshow progress
+		// Update carousel progress
 		const currentItem = this.currentItemSet.items[this.currentIndex];
 
 		if (currentItem.isPath)
@@ -258,18 +263,25 @@ class Carousel {
 interface CarouselItemSetParams {
 	name: string
 	items: CarouselItem[]
+	style?: CarouselStyle
 	triggerSelector?: string
 	startIndex?: number
 }
 class CarouselItemSet {
 	name: string
 	items: CarouselItem[]
+	style: CarouselStyle
 	triggerSelector?: string
 	startIndex?: number = 0 // TODO: Unused
 
 	constructor(params: CarouselItemSetParams) {
 		this.name = params.name
 		this.items = params.items
+		this.style = params.style ?? new CarouselStyle({
+			highlight: "#ff0000",
+			background: "#000000",
+			foreground: "#ffffff"
+		})
 		this.triggerSelector = params.triggerSelector
 		this.startIndex = params.startIndex
 	}
@@ -295,13 +307,34 @@ class CarouselItem {
 	}
 }
 
+interface CarouselStyleParams {
+	highlight: string
+	foreground: string
+	background: string
+}
+class CarouselStyle {
+	highlight: string
+	foreground: string
+	background: string
+
+	constructor(params: CarouselStyleParams) {
+		this.highlight = params.highlight;
+		this.foreground = params.foreground;
+		this.background = params.background;
+	}
+}
+
 // instantiate the carousel (TEST)
 const carousel = new Carousel({
 	selector: '#carousel',
-	easing: "cubic-bezier(0.61,-0.07, 0.31, 1.06)",
 	itemSets: [
 		new CarouselItemSet({
 			name: 'carousel1',
+			style: new CarouselStyle({
+				highlight: "lightblue",
+				foreground: "#eee",
+				background: "#222"
+			}),
 			startIndex: 0,
 			items: [
 				new CarouselItem({
