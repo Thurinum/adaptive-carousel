@@ -12,14 +12,15 @@
 	background-position: center center;
 	box-shadow: 0 0 3px 4px #00000021;
 	overflow: hidden;
+	border-radius: 5px;
 
 	z-index: 3;
 	opacity: 0;
 	display: none;
 	transform: translate(-50%, -50%) scale(0.9);
 	transition:
-		transform 0.5s ease-out, opacity 0.5s ease-out,
-		width 0.3s ease-out, height 0.3s ease-out;
+		transform 0.5s var(--easing), opacity 0.3s var(--easing),
+		width 0.3s var(--easing), height 0.3s var(--easing);
 }
 
 .carousel-arrow {
@@ -35,11 +36,13 @@
 	display: grid;
 	align-items: center;
 
-	width: 5%;
+	width: 45px;
 	height: 30%;
 	color: var(--highlight);
-	background-color: var(--background);
 	text-shadow: var(--highlight) 0 0 3px;
+	background-color: #00000088;
+	box-shadow: 0 0 3px 4px #00000021;
+	backdrop-filter: blur(25px);
 
 	transition: background 0.1s ease-out, color 0.1s linear, text-shadow 0.1s ease-out, transform 0.5s ease-out, box-shadow 0.1s ease-out, margin 0.1s ease-out;
 }
@@ -56,7 +59,7 @@
 }
 
 .carousel-arrow-left:hover {
-	box-shadow: 4px 0 4px 0px var(--foreground);
+	box-shadow: 4px 0 4px 0px #00000021;
 }
 
 .carousel-arrow-left:active {
@@ -71,7 +74,7 @@
 }
 
 .carousel-arrow-right:hover {
-	box-shadow: -4px 0 4px 0px var(--foreground);
+	box-shadow: -4px 0 4px 0px #00000021;
 }
 
 .carousel-arrow-right:active {
@@ -84,13 +87,16 @@
 	height: 34px;
 
 	position: absolute;
-	left: 47px;
+	left: 45px;
 	top: -47px;
 
 	color: var(--highlight);
-	background-color: #000000CC;
+	background-color: #00000051;
 	backdrop-filter: blur(25px);
 	padding: 13px 1% 0 1%;
+	box-shadow: 0 0 3px 4px #00000021;
+	border-bottom-left-radius: 5px;
+    	border-bottom-right-radius: 5px;
 
 	z-index: 3;
 	overflow: hidden;
@@ -99,8 +105,8 @@
 }
 
 .carousel-close {
-	width: 47px;
-	height: 47px;
+	width: 45px;
+	height: 45px;
 
 	position: absolute;
 	left: 0;
@@ -136,6 +142,8 @@
 	bottom: 0;
 
 	background-color: var(--highlight);
+	padding: 1px;
+	border-top-left-radius: 5px;
 
 	cursor: pointer;
 	user-select: none;
@@ -152,8 +160,9 @@
 	transform: translate(50%, 0);
 
 	color: var(--highlight);
-	background-color: #000000cc;
-	border: solid 1.5px black;
+	background-color: #00000088;
+	box-shadow: 0 0 3px 4px #00000021;
+	backdrop-filter: blur(25px);
 	border-radius: 3px;
 	padding: 1%;
 	text-align: center;

@@ -6,12 +6,10 @@
 // A set of items in the carousel
 interface CarouselParams {
 	selector: string
-	easing?: string
 	itemSets: CarouselItemSet[]
 }
 class Carousel {
 	carousel: HTMLElement
-	easing: string;
 	itemSets: CarouselItemSet[]
 
 	private titleTimeout?: any
@@ -21,7 +19,6 @@ class Carousel {
 	private currentItemSet?: CarouselItemSet
 
 	constructor(params: CarouselParams) {
-		this.easing = params.easing ?? "cubic-bezier(0.61,-0.07, 0.31, 1.06)";
 		this.itemSets = params.itemSets;
 
 		// get the carousel element
@@ -113,9 +110,9 @@ class Carousel {
 		}
 
 		// set theme
-		this.carousel.style.setProperty("--highlight", set.style.highlight);
-		this.carousel.style.setProperty("--foreground", set.style.foreground);
-		this.carousel.style.setProperty("--background", set.style.background);
+		Object.entries(set.style).forEach(([key, value]) => {
+			this.carousel.style.setProperty(`--${key}`, value);
+		});
 	}
 
 	setItem(oldIndex: number): void {
@@ -142,7 +139,7 @@ class Carousel {
 			newSlide.style.transform = "translate(-100%)";
 
 		newSlide.style.display = "block";
-		newSlide.style.transition = `transform 1s ${this.easing}, opacity 1s ${this.easing}`;
+		newSlide.style.transition = `transform 1s var(--easing), opacity 1s var(--easing)`;
 
 		// Give time to the transition to update
 		setTimeout(function () {
@@ -308,19 +305,22 @@ class CarouselItem {
 }
 
 interface CarouselStyleParams {
-	highlight: string
-	foreground: string
-	background: string
+	highlight?: string
+	foreground?: string
+	background?: string
+	easing?: string
 }
 class CarouselStyle {
 	highlight: string
 	foreground: string
 	background: string
+	easing: string
 
 	constructor(params: CarouselStyleParams) {
-		this.highlight = params.highlight;
-		this.foreground = params.foreground;
-		this.background = params.background;
+		this.highlight = params.highlight ?? "azure";
+		this.foreground = params.foreground ?? "#ffffff";
+		this.background = params.background ?? "#000000";
+		this.easing = params.easing ?? "cubic-bezier(0.61,-0.07, 0.31, 1.06)";
 	}
 }
 

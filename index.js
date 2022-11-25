@@ -1,11 +1,13 @@
 "use strict";
 class Carousel {
+    carousel;
+    itemSets;
+    titleTimeout;
+    isFullscreen = false;
+    isSwitching = false;
+    currentIndex = -1;
+    currentItemSet;
     constructor(params) {
-        var _a;
-        this.isFullscreen = false;
-        this.isSwitching = false;
-        this.currentIndex = -1;
-        this.easing = (_a = params.easing) !== null && _a !== void 0 ? _a : "cubic-bezier(0.61,-0.07, 0.31, 1.06)";
         this.itemSets = params.itemSets;
         const element = document.querySelector(params.selector);
         if (!element)
@@ -22,7 +24,6 @@ class Carousel {
         }
     }
     setItemSet(itemSetName) {
-        var _a, _b;
         const set = this.getItemSet(itemSetName);
         this.carousel.innerHTML = "";
         this.currentItemSet = set;
@@ -50,7 +51,7 @@ class Carousel {
         rightArrow.addEventListener("click", () => this.toNextItem());
         leftArrow.style.transform = "translate(0, -50%) scale(1)";
         rightArrow.style.transform = "translate(0, -50%) scale(1)";
-        (_a = document.querySelector(".carousel-resize")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+        document.querySelector(".carousel-resize")?.addEventListener("click", (e) => {
             if (this.isFullscreen) {
                 this.carousel.style.width = "85vw";
                 this.carousel.style.height = "80vh";
@@ -64,14 +65,14 @@ class Carousel {
                 this.isFullscreen = true;
             }
         });
-        (_b = document.querySelector(".carousel-close")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => this.hide());
+        document.querySelector(".carousel-close")?.addEventListener("click", () => this.hide());
         if (set.items.length > 0) {
             this.currentIndex = set.startIndex;
             this.setItem(set.items.length - 1);
         }
-        this.carousel.style.setProperty("--highlight", set.style.highlight);
-        this.carousel.style.setProperty("--foreground", set.style.foreground);
-        this.carousel.style.setProperty("--background", set.style.background);
+        Object.entries(set.style).forEach(([key, value]) => {
+            this.carousel.style.setProperty(`--${key}`, value);
+        });
     }
     setItem(oldIndex) {
         if (!this.currentItemSet) {
@@ -90,7 +91,7 @@ class Carousel {
         else
             newSlide.style.transform = "translate(-100%)";
         newSlide.style.display = "block";
-        newSlide.style.transition = `transform 1s ${this.easing}, opacity 1s ${this.easing}`;
+        newSlide.style.transition = `transform 1s var(--easing), opacity 1s var(--easing)`;
         setTimeout(function () {
             newSlide.style.transform = "translate(0)";
             newSlide.style.opacity = '1';
@@ -175,12 +176,15 @@ class Carousel {
     }
 }
 class CarouselItemSet {
+    name;
+    items;
+    style;
+    triggerSelector;
+    startIndex = 0;
     constructor(params) {
-        var _a;
-        this.startIndex = 0;
         this.name = params.name;
         this.items = params.items;
-        this.style = (_a = params.style) !== null && _a !== void 0 ? _a : new CarouselStyle({
+        this.style = params.style ?? new CarouselStyle({
             highlight: "#ff0000",
             background: "#000000",
             foreground: "#ffffff"
@@ -190,6 +194,10 @@ class CarouselItemSet {
     }
 }
 class CarouselItem {
+    name;
+    src;
+    isPath;
+    tagName;
     constructor(params) {
         this.name = params.name;
         this.tagName = params.tagName;
@@ -198,10 +206,15 @@ class CarouselItem {
     }
 }
 class CarouselStyle {
+    highlight;
+    foreground;
+    background;
+    easing;
     constructor(params) {
-        this.highlight = params.highlight;
-        this.foreground = params.foreground;
-        this.background = params.background;
+        this.highlight = params.highlight ?? "azure";
+        this.foreground = params.foreground ?? "#ffffff";
+        this.background = params.background ?? "#000000";
+        this.easing = params.easing ?? "cubic-bezier(0.61,-0.07, 0.31, 1.06)";
     }
 }
 const carousel = new Carousel({
