@@ -3,8 +3,6 @@
 // Customizable popup window/carousel system           //
 /////////////////////////////////////////////////////////
 
-require.context("../src", true, /\.css$/);
-
 export interface CarouselParams {
 	selector: string
 	itemSets: CarouselItemSet[]

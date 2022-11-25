@@ -5,7 +5,7 @@
 	"main": "lib/carousel.bundle.js",
 	"scripts": {
 		"start": "npm run build && copy .\\lib\\* .\\demo\\ && start chrome http://localhost:8000 && python -m http.server --directory ./demo/",
-		"build": "tsc --build && webpack && copy .\\build\\*.d.ts .\\lib\\"
+		"build": "tsc --build && copy .\\src\\*.css .\\lib\\"
 	},
 	"repository": {
 		"type": "git",
@@ -28,12 +28,6 @@
 	"homepage": "https://github.com/Thurinum/adaptive-carousel#readme",
 	"devDependencies": {
 		"@types/node": "^18.11.9",
-		"@types/webpack-env": "^1.18.0",
-		"css-loader": "^6.7.2",
-		"html-inline-css-webpack-plugin": "^1.11.1",
-		"to-string-loader": "^1.2.0",
-		"typescript": "^4.9.3",
-		"webpack": "^5.75.0",
-		"webpack-cli": "^5.0.0"
+		"typescript": "^4.9.3"
 	}
 }
