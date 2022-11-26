@@ -43,6 +43,11 @@ export class Carousel {
 		}
 	}
 
+	addItemSet(set: CarouselItemSet) {
+		this.itemSets = this.itemSets.filter(x => x.name !== set.name);
+		this.itemSets.push(set);
+	}
+
 	setItemSet(itemSetName: string) {
 		const set = this.getItemSet(itemSetName);
 
