@@ -11,6 +11,7 @@ export declare class Carousel {
     private currentIndex;
     private currentItemSet?;
     constructor(params: CarouselParams);
+    addItemSet(set: CarouselItemSet): void;
     setItemSet(itemSetName: string): void;
     setItem(oldIndex: number): void;
     toNextItem(): void;

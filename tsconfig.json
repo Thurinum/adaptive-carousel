@@ -7,10 +7,10 @@
 		"declaration": true,
 		"strict": true,
 		"target": "es5",
-		"outDir": "lib",
+		"outDir": "",
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src"],
+	"include": ["./"],
 	"exclude": ["node_modules"],
 	"compileOnSave": true
 }
