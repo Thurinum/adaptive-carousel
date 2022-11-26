@@ -1,6 +1,6 @@
 {
 	"name": "maxime-pelletier",
-	"version": "1.69.424",
+	"version": "1.69.425",
 	"description": "A versatile, customizable, and library-agnostic carousel system.\n\nSupports multiple content types, such as images from local and remote URLs, PDFs in <embed> tags, or full webpages in <iframe> tags.\nSupports basic theming.",
 	"files": [
 		"carousel.css",
