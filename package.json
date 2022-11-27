@@ -2,10 +2,13 @@
 	"name": "maxime-pelletier",
 	"version": "1.69.425",
 	"description": "A versatile, customizable, and library-agnostic carousel system.\n\nSupports multiple content types, such as images from local and remote URLs, PDFs in <embed> tags, or full webpages in <iframe> tags.\nSupports basic theming.",
+	"main": "index.js",
+	"types": "index.d.ts",
 	"files": [
-		"carousel.css",
-		"index.ts",
-		"index.d.ts"
+		"index.js",
+		"index.js.map",
+		"index.d.ts",
+		"carousel.css"
 	],
 	"scripts": {
 		"start": "npm run build && copy .\\lib\\* .\\demo\\ && start chrome http://localhost:8000 && python -m http.server --directory ./demo/",

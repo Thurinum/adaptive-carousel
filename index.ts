@@ -273,7 +273,7 @@ export class CarouselItemSet {
 	items: CarouselItem[]
 	style: CarouselStyle
 	triggerSelector?: string
-	startIndex?: number = 0 // TODO: Unused
+	startIndex?: number = 0
 
 	constructor(params: CarouselItemSetParams) {
 		this.name = params.name
